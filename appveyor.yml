@@ -6,17 +6,15 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
-
 install:
   ps: Bootstrap
 
 # Adapt as necessary starting from here
 
 build_script:
+  - travis-tool.sh install_bioc_deps
   - travis-tool.sh install_bioc graph
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github hadley/rlang
-  - travis-tool.sh install_github hadley/dplyr
 
 test_script:
   - travis-tool.sh run_tests
